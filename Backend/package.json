@@ -1,7 +1,9 @@
 {
   "name": "backend",
   "module": "index.ts",
-
+  "scripts": {
+    "dev": "bun --watch src/index.ts"
+  },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
     "@types/bun": "latest",
@@ -13,6 +15,11 @@
   "private": true,
   "type": "module",
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.3.3",
     "zod": "^4.3.6"
   }
 }
