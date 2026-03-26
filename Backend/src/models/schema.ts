@@ -70,16 +70,18 @@ const Content = new Schema({
 const ContentModel = mongoose.model("content", Content)
 
 
+// fixed schema
 const Link = new Schema({
     hash: {
         type: String,
-        userId: {
-            type: mongoose.Schema.Types.ObjectId,
-            required: true,
-            ref: "users"
-        }
+        required: true
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "users"
     }
 })
-const LinkModel = mongoose.model("links", Link)
+const LinkModel = mongoose.model("link", Link)
 
 export { UserModel, TagModel, ContentModel, LinkModel }
