@@ -9,7 +9,7 @@ const contentRouter = express.Router()
 const contentSchema = z.object({
     link: z.string().pipe(z.url()),
     title: z.string().min(1),
-    type: z.enum(["image", "video", "article", "audio"]),
+    type: z.enum(["image", "video", "article", "audio" , "twitter" , "youtube"]),
     tags: z.array(z.string()).optional()
 })
 
@@ -59,6 +59,7 @@ contentRouter.get('/content', userMiddleware, async (req: Request, res: Response
         const content = await ContentModel
             .find({ userId: userId })
             .populate({ path: "userId", select: "username" })
+            .populate({ path: "tags", select: "title" })
         if (content.length === 0) {
             return res.status(404).json({
                 message: "No content found"
@@ -78,7 +79,7 @@ contentRouter.get('/content', userMiddleware, async (req: Request, res: Response
 
 contentRouter.delete('/content/:id', userMiddleware, async (req: Request, res: Response) => {
     try {
-        const {id} = req.params
+        const { id } = req.params
         const content = await ContentModel.findById(id)
 
         if (!content) {

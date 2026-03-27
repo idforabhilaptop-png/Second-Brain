@@ -36,7 +36,7 @@ const Tag = new mongoose.Schema({
 const TagModel = mongoose.model("tags", Tag)
 
 
-const contentTypes = ['image', 'video', 'article', 'audio'];
+const contentTypes = ['image', 'video', 'article', 'audio' , 'youtube' , 'twitter'];
 const Content = new Schema({
     link:
     {
@@ -66,6 +66,8 @@ const Content = new Schema({
         ref: 'users',
         required: true
     },
+} , {
+    timestamps : true
 });
 const ContentModel = mongoose.model("content", Content)
 

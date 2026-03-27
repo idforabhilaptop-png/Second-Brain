@@ -17,14 +17,14 @@ const authSchema = z.object({
         .trim()
         .toLowerCase()
         .min(1, "Please provide an email address!")
-        .pipe(z.email({ message: "Please follow correct format" })),
+        .pipe(z.email({ message: "Please follow correct email format" })),
 
     password: z.string()
         .min(8, "Password must be at least 8 characters")
         .max(128, "Password too long")
-        .regex(/[A-Z]/, "Must contain at least one uppercase letter")
-        .regex(/[a-z]/, "Must contain at least one lowercase letter")
-        .regex(/[0-9]/, "Must contain at least one number")
+        .regex(/[A-Z]/, "Password Must contain at least one uppercase letter")
+        .regex(/[a-z]/, "Password Must contain at least one lowercase letter")
+        .regex(/[0-9]/, "Password Must contain at least one number")
 })
 
 const signupHandler = async (req: Request, res: Response) => {
@@ -32,7 +32,7 @@ const signupHandler = async (req: Request, res: Response) => {
         const { success, data, error } = authSchema.safeParse(req.body)
         if (!success) {
             return res.status(400).json({
-                error: z.flattenError(error).fieldErrors
+                message: z.flattenError(error).fieldErrors
             })
         }
         const { username, email, password } = data
@@ -84,9 +84,9 @@ const signinHandler = async (req: Request, res: Response) => {
         const token = jwt.sign({ userId: User._id }, process.env.SECRET_KEY!, { expiresIn: "1h" })
 
         res.cookie("token", token, {
-            maxAge: 60 * 60 * 1000,
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production"
+            sameSite: "lax",
+            secure: false  // false for localhost, true for production
         })
 
         return res.status(200).json({
