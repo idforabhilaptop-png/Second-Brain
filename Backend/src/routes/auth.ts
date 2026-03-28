@@ -84,10 +84,10 @@ const signinHandler = async (req: Request, res: Response) => {
         const token = jwt.sign({ userId: User._id }, process.env.SECRET_KEY!, { expiresIn: "1h" })
 
         res.cookie("token", token, {
-            httpOnly: true,
-            sameSite: "lax",
-            secure: false  // false for localhost, true for production
-        })
+  httpOnly: true,
+  secure: true,          // ✅ must be true in production (HTTPS)
+  sameSite: "none",      // ✅ required if frontend & backend are on different domains
+});
 
         return res.status(200).json({
             message: "Signed in successfully.",
