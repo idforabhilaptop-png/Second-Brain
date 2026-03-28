@@ -10,7 +10,7 @@ interface CardProps {
     type: "youtube" | "twitter"
     tags: { _id: string; title: string }[]
     createdAt: string
-    onDelete: (value: string) => void
+    onDelete?: (value: string) => void
 }
 
 // Convert any YouTube URL format to embed URL
@@ -51,7 +51,8 @@ const Card = (props: CardProps) => {
 
         try {
             await axios.delete(`${BACKEND_URL}/api/v1/content/${props.id}`, { withCredentials: true })
-            props.onDelete(props.id)
+            if (props.onDelete)
+                props.onDelete(props.id)
         } catch (err: unknown) {
             if (axios.isAxiosError(err)) {
                 const serverError = err?.response?.data?.message

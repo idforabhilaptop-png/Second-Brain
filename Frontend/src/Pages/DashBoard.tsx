@@ -6,6 +6,9 @@ import CreateContent from "../components/CreateContent"
 import Button from "../components/Button"
 import Card from "../components/Card"
 import { BACKEND_URL } from "../config"
+import { Logout } from "../Icons/Logout"
+import { useNavigate } from "react-router"
+import ShareContent from "../components/ShareContent"
 
 interface ContentItem {
   _id: string
@@ -18,6 +21,7 @@ interface ContentItem {
 
 const DashBoard = () => {
   const [contentBoxOpen, setContentBoxOpen] = useState(false)
+  const [shareBoxOpen, setShareBoxOpen] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [title, setTitle] = useState("")
   const [link, setLink] = useState("")
@@ -26,7 +30,7 @@ const DashBoard = () => {
   const [contents, setContents] = useState<ContentItem[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
-
+  const navigate = useNavigate()
 
   const fetchContent = async () => {
     try {
@@ -49,6 +53,17 @@ const DashBoard = () => {
 
   const handleDelete = (id: string) => {
     setContents(prev => prev.filter(item => item._id !== id))
+  }
+
+  const handleLogout = async () => {
+    await axios.post(
+      `${BACKEND_URL}/api/v1/logout`,
+      {},
+      { withCredentials: true }
+    )
+    setTimeout(() => {
+      navigate('/')
+    }, 1000)
   }
 
   useEffect(() => {
@@ -94,6 +109,10 @@ const DashBoard = () => {
           setTags={setTags}
           setContentBoxOpen={setContentBoxOpen} />
 
+        <ShareContent
+          shareBoxOpen={shareBoxOpen}
+          setShareBoxOpen={setShareBoxOpen} />
+
         {/* Top bar */}
         <div className="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-5 bg-slate-100 sticky top-0 z-10 border-b border-slate-200">
 
@@ -113,11 +132,15 @@ const DashBoard = () => {
 
           <div className="flex items-center gap-2 sm:gap-3">
             <Button variant="secondary" size="md" text="Share Brain" startIcon={<Share2 size={16} />}
-              onClick={() => console.log("share")}
+              onClick={() => setShareBoxOpen(true)}
             />
             <Button variant="primary" size="md" text="Add Content" startIcon={<Plus size={16} />}
               onClick={() => setContentBoxOpen(true)}
             />
+            <button onClick={handleLogout}>
+              <Logout />
+            </button>
+
           </div>
         </div>
 
