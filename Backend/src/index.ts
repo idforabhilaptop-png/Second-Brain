@@ -10,7 +10,7 @@ const app = express()
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin: process.env.FRONTEND_URL, // or your frontend URL
+    origin: "https://second-brain-b5dz.onrender.com", // or your frontend URL
     credentials: true
 }));
 
