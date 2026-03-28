@@ -2,7 +2,7 @@
 
 > A personal knowledge management app that helps you capture, organize, and revisit everything that matters — your own second brain, always within reach.
 
-🔗 **Live Demo**: [https://second-brain-b5dz.onrender.com](https://second-brain-b5dz.onrender.com)
+🔗 **Live Demo**: [https://second-brain-b5dz.onrender.com](https://second-brain-mu-seven.vercel.app)
 
 ---
 
