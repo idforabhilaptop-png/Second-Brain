@@ -10,7 +10,7 @@ const app = express()
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin: "https://second-brain-mu-seven.vercel.app/", // or your frontend URL
+    origin: "https://second-brain-mu-seven.vercel.app", // or your frontend URL
     credentials: true
 }));
 
